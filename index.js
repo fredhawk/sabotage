@@ -12,13 +12,14 @@ const server = app.listen(3000, () => {
 });
 app.post('/', (req, res) => {
   let text = req.body.text;
+  console.log(req.body);
   // implement bot here
   if (! /^\d+$/.test(text)) {
     res.send('U R doing it wrong. Enter a status code like 200!')
     return;
   }
   let data = {
-    response_type: 'in_channel',
+    response_type: 'ephemeral',
     text: '302: Found',
     attachments: [
       {
