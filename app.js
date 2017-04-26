@@ -3,17 +3,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const PORT = parseInt(process.env.PORT);
+
 const app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const server = app.listen(3000, () => {
+const server = app.listen(PORT, () => {
   console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
 });
 app.post('/', (req, res) => {
   let text = req.body.text;
   console.log(req.body);
-  // implement bot here
+  // What follows are example of response
   if (! /^\d+$/.test(text)) {
     res.send('U R doing it wrong. Enter a status code like 200!')
     return;
@@ -27,5 +29,6 @@ app.post('/', (req, res) => {
       }
     ]
   }
+  // end of example
   res.json(data)
 })

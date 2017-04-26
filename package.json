@@ -1,8 +1,8 @@
 {
-  "name": "rhinobot",
-  "version": "1.0.0",
-  "main": "index.js",
-  "author": "osycon <fredrichawk@gmail.com>",
+  "name": "sa-bot-age",
+  "version": "0.0.1",
+  "main": "app.js",
+  "author": "Osycon, Pablo, Kekami, Periman",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.1",
