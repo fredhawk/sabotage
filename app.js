@@ -3,7 +3,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const PORT = parseInt(process.env.PORT);
+const PORT = process.env.PORT;
 
 const app = express();
 app.use(bodyParser.json())
