@@ -26,25 +26,35 @@ const commands = {
     command: `add`,
     description: `Adds a resource to the bot.`,
     usage: `/hidi add category link`
+  },
+  search: {
+    command: `search`,
+    description: `Search for something and see what comes up.`,
+    usage: `/hidi search (searchterm)`
   }
 };
 app.post('/', (req, res) => {
   let text = req.body.text;
   // console.log(req.body);
-  const message = req.body.text.split(' ');
+  const message = req.body.text.split(` `);
   console.log(message);
   switch (message[0]) {
-    case 'add':
+    case `add`:
       const [category, link] = [message[1], message[2]];
       console.log(`category`, category);
       console.log(`link`, link);
-      res.json('Working!');
+      res.json(`Working!`);
+      break;
+    case `search`:
+      const [first, ...searchterm] = message;
+      console.log(`searchterm`, searchterm);
+      res.json(`Searching!`);
       break;
     case `help`:
       res.json(`Help please!`);
       break;
     default:
-      res.json('Not Working!');
+      res.json(`Not Working!`);
       break;
   }
 });
