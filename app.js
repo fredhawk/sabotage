@@ -34,6 +34,26 @@ const commands = {
   }
 };
 
+categories = [
+  `Javascript`,
+  `Design`,
+  `Typography`,
+  `ReactJS`,
+  `SVG`,
+  `Angular`,
+  `Vue`,
+  `jQuery`,
+  `PHP`,
+  `CSS`,
+  `HTML`,
+  `Java`,
+  `Python`,
+  `Node`,
+  `Tools`,
+  `Hardware`,
+  `Chat bots`
+];
+
 app.post('/', (req, res) => {
   let text = req.body.text;
   // console.log(req.body);
