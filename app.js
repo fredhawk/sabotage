@@ -33,6 +33,7 @@ const commands = {
     usage: `/hidi search (searchterm)`
   }
 };
+
 app.post('/', (req, res) => {
   let text = req.body.text;
   // console.log(req.body);
@@ -40,7 +41,7 @@ app.post('/', (req, res) => {
   console.log(message);
   switch (message[0]) {
     case `add`:
-      const [category, link] = [message[1], message[2]];
+      const [command, category, link, ...rest] = [message];
       console.log(`category`, category);
       console.log(`link`, link);
       res.json(`Working!`);
