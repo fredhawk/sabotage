@@ -16,25 +16,25 @@ const server = app.listen(PORT, () => {
     app.settings.env
   );
 });
-const commands = {
-  help: {
+const commands = [
+  {
     command: `help`,
     description: `Shows the available commands and how to use them.`,
     usage: `/hidi help`
   },
-  add: {
+  {
     command: `add`,
     description: `Adds a resource to the bot.`,
-    usage: `/hidi add category link`
+    usage: `/hidi add category url "Resource title"`
   },
-  search: {
+  {
     command: `search`,
     description: `Search for something and see what comes up.`,
-    usage: `/hidi search (searchterm)`
+    usage: `/hidi search "searchterm"`
   }
-};
+];
 
-categories = [
+const categories = [
   `Javascript`,
   `Design`,
   `Typography`,
@@ -61,10 +61,11 @@ app.post('/', (req, res) => {
   console.log(message);
   switch (message[0]) {
     case `add`:
-      const [command, category, link, ...rest] = [message];
+      const [command, category, link, ...linkTitle] = message;
       console.log(`category`, category);
       console.log(`link`, link);
-      res.json(`Working!`);
+      console.log(`rest`, linkTitle);
+      res.json(`Adding!`);
       break;
     case `search`:
       const [first, ...searchterm] = message;
