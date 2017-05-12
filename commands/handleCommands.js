@@ -148,7 +148,6 @@ function findResource(message) {
           }]
         };
       } else {
-        console.log('Running')
         return data;
       }
     });
