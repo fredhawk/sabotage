@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ResourceSchema = new Schema({
   title: String,
   description: String,
-  category: String,
+  // category: String,
   url: String
 });
 

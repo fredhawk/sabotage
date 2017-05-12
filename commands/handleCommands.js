@@ -79,6 +79,8 @@ function addResource(message) {
   const buildQuery = () => {
     return new Promise((resolve, reject) => {
       var client = new MetaInspector(url, { timeout: 5000 });
+      // build a query
+      // Use the metainspector to extract the page title from the supplied url and use it as a title
       client.on("fetch", function(){
         let query = {
           title: client.title,
@@ -94,7 +96,9 @@ function addResource(message) {
   }
   
   buildQuery().then((query) => {
+    // Create a database entry using the query
     Resource.create(query)
+      // Return the created entry and forward it to slack.
       .then(() => Resource.findOne(query))
       .then((resource) => {
         let data = {
@@ -117,10 +121,12 @@ function findResource(message) {
   const [first, ...searchterm] = message;
   // check the database for the searchterm matching
   console.log(`searchterm`, searchterm);
-
+  
+  // Search the database using the query
   return Resource.find({
     $text: { $search: searchterm.join(' ')}
   })
+    // Return the resourced found and forward it to slack.
     .then((resources) => {
       let data = {
         response_type: 'ephemeral',
@@ -132,8 +138,6 @@ function findResource(message) {
           }
         })
       }
-      
-      return(data)
     });
 }
 

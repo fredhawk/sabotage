@@ -37,10 +37,12 @@ const server = app.listen(PORT, () => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Route to website
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'index.html'))
 })
 
+// Bot route
 app.post('/', (req, res) => {
   let text = req.body.text;
 
