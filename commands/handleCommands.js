@@ -95,9 +95,9 @@ function addResource(message) {
     })
   }
   
-  buildQuery().then((query) => {
+  return buildQuery().then((query) => {
     // Create a database entry using the query
-    Resource.create(query)
+    return Resource.create(query)
       // Return the created entry and forward it to slack.
       .then(() => Resource.findOne(query))
       .then((resource) => {
@@ -112,7 +112,7 @@ function addResource(message) {
           ]
         }
 
-        resolve(data)
+        return(data)
       });
   })
 }
