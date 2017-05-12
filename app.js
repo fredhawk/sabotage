@@ -39,7 +39,10 @@ app.post('/', (req, res) => {
 
   // console.log(req.body);
   const message = req.body.text.split(` `);
-  console.log(message);
-  handleCommands(message);
+  // console.log(message);
   
+  handleCommands(message)
+    .then((data) => {
+      res.json(data)
+    })
 });
