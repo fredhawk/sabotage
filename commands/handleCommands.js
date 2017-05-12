@@ -138,6 +138,19 @@ function findResource(message) {
           }
         })
       }
+
+      if (resources.length === 0) {
+        return {
+          response_type: 'ephemeral',
+          attachments: [{
+            title: "No results",
+            text: "Try searching for something else."
+          }]
+        };
+      } else {
+        console.log('Running')
+        return data;
+      }
     });
 }
 
