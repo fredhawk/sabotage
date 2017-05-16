@@ -1,23 +1,26 @@
 'use strict';
 // Docs https://www.npmjs.com/package/node-metainspector
-const MetaInspector = require('node-metainspector');
+const MetaInspector = require('node-metainspector');
 const Resource = require('../models/resource');
 
 const commands = [
   {
+    name: `Help command`,
     command: `help`,
     description: `Shows the available commands and how to use them.`,
-    usage: `/hidi help`
+    usage: `/sabotage help`
   },
   {
+    name: `Add command`,
     command: `add`,
     description: `Adds a resource to the bot.`,
-    usage: `/hidi add category url "Resource title"`
+    usage: `/sabotage add category url "Resource title"`
   },
   {
+    name: `Search command`,
     command: `search`,
     description: `Search for something and see what comes up.`,
-    usage: `/hidi search "searchterm"`
+    usage: `/sabotage search "searchterm"`
   }
 ];
 
@@ -42,30 +45,64 @@ const categories = [
   `Chat bots`
 ];
 
+const helpCommands = commands => {
+  const attachments = [];
+  commands.map(command => {
+    attachments.push({
+      fallback: `Required plain-text summary of the attachment.`,
+      color: '#36a64f',
+      pretext: `*${command.name}*`,
+      title: `${command.command}`,
+      text: `${command.description}\n ${command.usage}`,
+      ts: 123456789,
+      mrkdwn_in: ['pretext']
+    });
+  });
+  return { attachments };
+};
+
+const searchCommand = searchresult => {
+  const attachments = [];
+  searchresult.map(search => {
+    attachments.push({
+      fallback: `Required plain-text summary of the attachment.`,
+      color: '#36a64f',
+      pretext: `*${search.linkTitle}*`,
+      title: `${search.linkTitle}`,
+      title_link: `${search.url}`,
+      text: `${search.tagline}`,
+      ts: 123456789,
+      mrkdwn_in: ['pretext']
+    });
+  });
+  return { attachments };
+};
+
 const handleCommand = message => {
   switch (message[0]) {
     case `add`:
       return new Promise((resolve, reject) => {
-        resolve(addResource(message))
+        resolve(addResource(message));
       });
-    case `search`:  
+    case `search`:
       return new Promise((resolve, reject) => {
-        resolve(findResource(message))
-      })
-      // respond with the search result, how many results should be returned?
+        resolve(findResource(message));
+      });
+    // respond with the search result, how many results should be returned?
     case `help`:
-      // map over the commands object and output a response with all the commands information
-      return `Help please!`;
+      return helpCommands(commands);
     default:
       return new Promise((resolve, reject) => {
         resolve({
           response_type: 'ephemeral',
-          attachments: [{
-            title: "Unknown Command",
-            text: "Try '/[bot-name] help' for available commands."
-          }]
+          attachments: [
+            {
+              title: 'Unknown Command',
+              text: "Try '/[bot-name] help' for available commands."
+            }
+          ]
         });
-      })
+      });
   }
 };
 
@@ -78,79 +115,85 @@ function addResource(message) {
 
   const buildQuery = () => {
     return new Promise((resolve, reject) => {
-      var client = new MetaInspector(url, { timeout: 5000 });
+      var client = new MetaInspector(url, { timeout: 5000 });
       // build a query
       // Use the metainspector to extract the page title from the supplied url and use it as a title
-      client.on("fetch", function(){
+      client.on('fetch', function() {
         let query = {
           title: client.title,
           url,
-          description: linkTitle.join(' '),
-        }
-        
-        resolve(query)
+          description: linkTitle.join(' ')
+        };
+
+        resolve(query);
       });
 
-      client.fetch()
-    })
-  }
-  
-  return buildQuery().then((query) => {
+      client.fetch();
+    });
+  };
+
+  return buildQuery().then(query => {
     // Create a database entry using the query
-    return Resource.create(query)
-      // Return the created entry and forward it to slack.
-      .then(() => Resource.findOne(query))
-      .then((resource) => {
-        let data = {
-          response_type: 'ephemeral',
-          text: 'Results',
-          attachments: [
-            {
-              title: resource.title,
-              text: resource.url + '\n' + resource.description
-            }
-          ]
-        }
+    return (
+      Resource.create(query)
+        // Return the created entry and forward it to slack.
+        .then(() => Resource.findOne(query))
+        .then(resource => {
+          let data = {
+            response_type: 'ephemeral',
+            text: 'Results',
+            attachments: [
+              {
+                title: resource.title,
+                text: resource.url + '\n' + resource.description
+              }
+            ]
+          };
 
-        return(data)
-      });
-  })
+          return data;
+        })
+    );
+  });
 }
 
 function findResource(message) {
   const [first, ...searchterm] = message;
   // check the database for the searchterm matching
   console.log(`searchterm`, searchterm);
-  
-  // Search the database using the query
-  return Resource.find({
-    $text: { $search: searchterm.join(' ')}
-  })
-    // Return the resourced found and forward it to slack.
-    .then((resources) => {
-      let data = {
-        response_type: 'ephemeral',
-        text: 'Results',
-        attachments: resources.map((resource) => {
-          return {
-            title: resource.title,
-            text: resource.url + '\n' + resource.description
-          }
-        })
-      }
 
-      if (resources.length === 0) {
-        return {
+  // Search the database using the query
+  return (
+    Resource.find({
+      $text: { $search: searchterm.join(' ') }
+    })
+      // Return the resourced found and forward it to slack.
+      .then(resources => {
+        let data = {
           response_type: 'ephemeral',
-          attachments: [{
-            title: "No results",
-            text: "Try searching for something else."
-          }]
+          text: 'Results',
+          attachments: resources.map(resource => {
+            return {
+              title: resource.title,
+              text: resource.url + '\n' + resource.description
+            };
+          })
         };
-      } else {
-        return data;
-      }
-    });
+
+        if (resources.length === 0) {
+          return {
+            response_type: 'ephemeral',
+            attachments: [
+              {
+                title: 'No results',
+                text: 'Try searching for something else.'
+              }
+            ]
+          };
+        } else {
+          return data;
+        }
+      })
+  );
 }
 
 module.exports = handleCommand;
