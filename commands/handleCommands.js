@@ -143,7 +143,7 @@ function addResource(message) {
         .then(resource => {
           let data = {
             response_type: 'ephemeral',
-            text: 'Results',
+            text: 'Yay you have added a resource!',
             attachments: [
               {
                 title: resource.title,
