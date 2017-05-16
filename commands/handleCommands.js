@@ -60,27 +60,6 @@ const helpCommands = commands => {
   };
 };
 
-const searchCommand = searchresult => {
-  const attachments = [];
-  searchresult.map(search => {
-    attachments.push({
-      fallback: `Required plain-text summary of the attachment.`,
-      color: '#36a64f',
-      pretext: `*${search.linkTitle}*`,
-      title: `${search.linkTitle}`,
-      title_link: `${search.url}`,
-      text: `${search.tagline}`,
-      ts: 123456789,
-      mrkdwn_in: ['pretext']
-    });
-  });
-  return {
-    response_type: `ephemeral`,
-    text: `Help Commands`,
-    attachments
-  };
-};
-
 const handleCommand = message => {
   switch (message[0]) {
     case `add`:
