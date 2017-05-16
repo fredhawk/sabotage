@@ -14,7 +14,7 @@ const commands = [
     name: `Add command`,
     command: `add`,
     description: `Adds a resource to the bot.`,
-    usage: `/sabotage add category url "Resource title"`
+    usage: `/sabotage add url "Resource title"`
   },
   {
     name: `Search command`,
@@ -145,7 +145,8 @@ function addResource(message) {
             attachments: [
               {
                 title: resource.title,
-                text: resource.url + '\n' + resource.description
+                title_link: resource.url,
+                text: resource.description
               }
             ]
           };
@@ -158,7 +159,7 @@ function addResource(message) {
 
 function findResource(message) {
   const [first, ...searchterm] = message;
-  // check the database for the searchterm matching
+  // check the database for the search term matching
   console.log(`searchterm`, searchterm);
 
   // Search the database using the query
@@ -174,7 +175,8 @@ function findResource(message) {
           attachments: resources.map(resource => {
             return {
               title: resource.title,
-              text: resource.url + '\n' + resource.description
+              title_link: resource.url,
+              text: resource.description
             };
           })
         };
