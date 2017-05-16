@@ -90,7 +90,9 @@ const handleCommand = message => {
       });
     // respond with the search result, how many results should be returned?
     case `help`:
-      return helpCommands(commands);
+      return new Promise((resolve, reject) => {
+        resolve(helpCommands(commands));
+      });
     default:
       return new Promise((resolve, reject) => {
         resolve({
