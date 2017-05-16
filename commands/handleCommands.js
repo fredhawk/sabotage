@@ -49,8 +49,7 @@ const helpCommands = commands => {
       fallback: `Required plain-text summary of the attachment.`,
       color: '#36a64f',
       title: `${command.name}`,
-      text: `${command.description}\n ${command.usage}`,
-      mrkdwn_in: ['pretext']
+      text: `${command.description}\n ${command.usage}`
     });
   });
   return {
