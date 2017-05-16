@@ -6,21 +6,18 @@ const Resource = require('../models/resource');
 const commands = [
   {
     name: `Help command`,
-    command: `help`,
     description: `Shows the available commands and how to use them.`,
-    usage: `/sabotage help`
+    usage: `/[bot-name] help`
   },
   {
     name: `Add command`,
-    command: `add`,
     description: `Adds a resource to the bot.`,
-    usage: `/sabotage add url "Resource title"`
+    usage: `/[bot-name] add url "Resource title"`
   },
   {
     name: `Search command`,
-    command: `search`,
     description: `Search for something and see what comes up.`,
-    usage: `/sabotage search "searchterm"`
+    usage: `/[bot-name] search "search term"`
   }
 ];
 
@@ -51,14 +48,16 @@ const helpCommands = commands => {
     attachments.push({
       fallback: `Required plain-text summary of the attachment.`,
       color: '#36a64f',
-      pretext: `*${command.name}*`,
-      title: `${command.command}`,
+      title: `${command.name}`,
       text: `${command.description}\n ${command.usage}`,
-      ts: 123456789,
       mrkdwn_in: ['pretext']
     });
   });
-  return { attachments };
+  return {
+    response_type: `ephemeral`,
+    text: `*Help instructions* \n A list of all the available commands.`,
+    attachments
+  };
 };
 
 const searchCommand = searchresult => {
@@ -75,7 +74,11 @@ const searchCommand = searchresult => {
       mrkdwn_in: ['pretext']
     });
   });
-  return { attachments };
+  return {
+    response_type: `ephemeral`,
+    text: `Help Commands`,
+    attachments
+  };
 };
 
 const handleCommand = message => {
@@ -99,6 +102,7 @@ const handleCommand = message => {
           response_type: 'ephemeral',
           attachments: [
             {
+              color: 'danger',
               title: 'Unknown Command',
               text: "Try '/[bot-name] help' for available commands."
             }
@@ -146,6 +150,7 @@ function addResource(message) {
             text: 'Yay you have added a resource!',
             attachments: [
               {
+                color: 'good',
                 title: resource.title,
                 title_link: resource.url,
                 text: resource.description
@@ -176,6 +181,7 @@ function findResource(message) {
           text: 'Results',
           attachments: resources.map(resource => {
             return {
+              color: 'good',
               title: resource.title,
               title_link: resource.url,
               text: resource.description
@@ -188,6 +194,7 @@ function findResource(message) {
             response_type: 'ephemeral',
             attachments: [
               {
+                color: 'danger',
                 title: 'No results',
                 text: 'Try searching for something else.'
               }
