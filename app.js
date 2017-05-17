@@ -9,7 +9,7 @@ const Resource = require('./models/resource');
 
 const handleCommands = require('./commands/handleCommands');
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 // Url to database hosted at mlabs.com
 var dbUrl = 'mongodb://sabotage:sabotage@ds055832.mlab.com:55832/sabotage';
@@ -39,8 +39,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Route to website
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'index.html'))
-})
+  res.sendFile(path.resolve(__dirname, 'index.html'));
+});
 
 // Bot route
 app.post('/', (req, res) => {
@@ -49,9 +49,8 @@ app.post('/', (req, res) => {
   // console.log(req.body);
   const message = req.body.text.split(` `);
   // console.log(message);
-  
-  handleCommands(message)
-    .then((data) => {
-      res.json(data)
-    })
+
+  handleCommands(message).then(data => {
+    res.json(data);
+  });
 });
