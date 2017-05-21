@@ -14,6 +14,9 @@ const PORT = process.env.PORT || 8080;
 // Url to database hosted at mlabs.com
 var dbUrl = 'mongodb://sabotage:sabotage@ds055832.mlab.com:55832/sabotage';
 
+// Use ES6 Promises
+mongoose.Promise = global.Promise;
+
 // Connect to database
 mongoose.connect(dbUrl, (err, res) => {
   if (err) {

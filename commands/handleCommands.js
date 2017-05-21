@@ -91,11 +91,25 @@ const handleCommand = message => {
 };
 
 function addResource(message) {
-  const [command, url, ...linkTitle] = message;
-  // Make check so the inputs aren't malicious code.
-  // console.log(`category`, category);
-  console.log(`link`, url);
-  console.log(`rest`, linkTitle);
+  const [command, url, ...linkDescription] = message;
+
+  if (!url) {
+    let data = {
+      response_type: 'ephemeral',
+      text: 'URL is required',
+    };
+
+    return data;
+  }
+
+  if (linkDescription.length === 0) {
+    let data = {
+      response_type: 'ephemeral',
+      text: 'Description is required',
+    };
+
+    return data;
+  }
 
   const buildQuery = () => {
     return new Promise((resolve, reject) => {
@@ -106,7 +120,7 @@ function addResource(message) {
         let query = {
           title: client.title,
           url,
-          description: linkTitle.join(' ')
+          description: linkDescription.join(' ')
         };
 
         resolve(query);
@@ -139,7 +153,7 @@ function addResource(message) {
           return data;
         })
     );
-  });
+  })
 }
 
 function findResource(message) {
