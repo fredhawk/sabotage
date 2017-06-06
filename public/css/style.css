@@ -36,25 +36,24 @@ img {
     border: 2px solid black;
 }
 .com {
-    margin-bottom: 5px;
+    /*margin-bottom: 5px;*/
     background-color: #424242;
     color: #FFCCBC;
-    border-radius: 20px;
+    border-radius: 5px;
 }
 .com-head {
     text-align: center;
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;*/
 }
 .com-title {
     font-size: 20px;
     text-align: center;
-
 }
 .com-subtitle {
     text-align: center;
 }
 .slack-row {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 .slack-row h2{
     text-align: center
@@ -62,7 +61,10 @@ img {
 .slack img{
     text-align: center;
 }
-
+a img {
+    width: 343px;
+    /*height: 194px;*/
+}
 
 /*FOOTER*/
 
