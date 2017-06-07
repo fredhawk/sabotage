@@ -30,20 +30,18 @@ img {
 /* SECTION */
 
 #commands {
-    margin-top: 10px;
+    margin-top: 80px;
     background: #E57373;
     border-radius: 20px;
     border: 2px solid black;
 }
 .com {
-    /*margin-bottom: 5px;*/
     background-color: #424242;
     color: #FFCCBC;
     border-radius: 5px;
 }
 .com-head {
     text-align: center;
-    /*margin-bottom: 15px;*/
 }
 .com-title {
     font-size: 20px;
@@ -52,26 +50,27 @@ img {
 .com-subtitle {
     text-align: center;
 }
-.slack-row {
-    /*margin-top: 20px;*/
-}
 .slack-row h2{
     text-align: center
 }
 .slack img{
     text-align: center;
 }
-a img {
-    width: 343px;
-    /*height: 194px;*/
-}
+
 
 /*FOOTER*/
 
 .footer {
     height: 100px;
-    margin-top: 10px;
+    margin-top: 150px;
     text-align: center;
     padding-top: 30px;
     font-size: 20px;
+}
+.footer a {
+    text-decoration: none;
+    color: #000;
+}
+.footer a:hover {
+    color:  #E57373;
 }
