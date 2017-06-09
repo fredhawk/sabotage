@@ -87,6 +87,9 @@ app.get('/slack', (req, res) => {
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'index.html'));
 });
+app.get('/success.html', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'success.html'));
+});
 
 // Bot route
 app.post('/', (req, res) => {
