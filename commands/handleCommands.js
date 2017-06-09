@@ -7,17 +7,17 @@ const commands = [
   {
     name: `Help command`,
     description: `Shows the available commands and how to use them.`,
-    usage: `/[bot-name] help`
+    usage: `/Sabotage help`
   },
   {
     name: `Add command`,
     description: `Adds a resource to the bot.`,
-    usage: `/[bot-name] add url "Resource title"`
+    usage: `/Sabotage add url "Resource title"`
   },
   {
     name: `Search command`,
     description: `Search for something and see what comes up.`,
-    usage: `/[bot-name] search "search term"`
+    usage: `/Sabotage search "search term"`
   }
 ];
 
@@ -82,7 +82,7 @@ const handleCommand = message => {
             {
               color: 'danger',
               title: 'Unknown Command',
-              text: "Try '/[bot-name] help' for available commands."
+              text: "Try '/Sabotage help' for available commands."
             }
           ]
         });
@@ -96,7 +96,7 @@ function addResource(message) {
   if (!url) {
     let data = {
       response_type: 'ephemeral',
-      text: 'URL is required',
+      text: 'URL is required'
     };
 
     return data;
@@ -105,7 +105,7 @@ function addResource(message) {
   if (linkDescription.length === 0) {
     let data = {
       response_type: 'ephemeral',
-      text: 'Description is required',
+      text: 'Description is required'
     };
 
     return data;
@@ -153,7 +153,7 @@ function addResource(message) {
           return data;
         })
     );
-  })
+  });
 }
 
 function findResource(message) {
