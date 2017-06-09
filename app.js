@@ -72,7 +72,9 @@ app.get('/slack', (req, res) => {
               res.send(`Sabotage resource bot has been added to your team!`);
             } else {
               let team = JSON.parse(body).team.domain;
-              res.redirect(`https://sabotage-rhinos.herokuapp.com/`);
+              res.redirect(
+                `https://sabotage-rhinos.herokuapp.com/success.html`
+              );
             }
           }
         }
